@@ -1,0 +1,104 @@
+Unique = *
+Database schema:
+Suppliers(sid*: integer, sname: string, address: string)
+Parts(pid*: integer, pname: string, color: string)
+Catalog(sid*: integer, pid*: integer, cost: real)
+
+Question 1:
+-Find the sids of suppliers who sell a 'red' part that costs more than 100.
+SELECT c.sid
+FROM Catalog c, Parts p
+WHERE c.pid = p.pid AND
+	  c.cost > 100 AND
+	  p.color = 'red';
+	  
+Question 2:
+-An expensive part is a part that has its costs > 100.  Find the sid of those suppliers who sell such a part.
+SELECT sid FROM catalog WHERE cost > 100;
+
+----------------------------------------------------------------------------------------------
+
+Unique = *
+Database schema:
+Emp(eId*: integer, eName: string, age: integer, salary: real)
+Works(eId*: integer, dId*: integer, pctTime: integer)
+Dept(dId*: integer, budger: real, managerId: integer)
+
+Question 1:
+-Print the names and ages of each employee who works full time (pctTime=100) for department with ID being 1.
+SELECT e.eName, e.age
+FROM Emp e, Works w, Dept dId
+WHERE w.pctTime=100 AND
+	  d.dId=1 AND
+	  w.dId=d.dId AND
+	  w.eId=e.eId;
+
+----------------------------------------------------------------------------------------------
+
+Unique = *
+Database schema:
+Student(Snum*: integer, Sname: string, Level: string)
+Class(Fid*: integer, meets_At: string, Cname: string, Room: string)
+Faculty(Fid*: integer, Fname: string)
+Enroll(Snum*: integer, Cname: string)
+
+Question 1:
+-Find the student id of all students whose name starts with M.
+SELECT snum FROM student WHERE sname LIKE 'M%';
+
+Question 2:
+-Find the name of the classes that meet at room R12.
+SELECT Cname FROM class WHERE Room='R12';
+
+Question 3:
+-Find the name of all faculty members who are working at department 20.
+SELECT Fname from faculty WHERE Deptid='20';
+
+Question 4:
+-Find the names of all Juniors (level='JR') who are currently enrolled in Database Systems.
+SELECT Student.Sname, enroll.cname 
+FROM Student 
+INNER JOIN enroll ON enroll.snum=Student.Snum 
+WHERE Level='JR' AND cname='Database Systems';
+
+Question 5:
+-Find the names of all Juniors (level = JR) who are enrolled in a class taught by ‘I. Teach’.
+SELECT Student.Sname,class.Cname 
+FROM Student 
+INNER JOIN enroll ON enroll.Snum=Student.Snum 
+INNER JOIN class ON class.Cname=enroll.Cname
+INNER JOIN faculty ON faculty.Fid=class.Fid
+WHERE Student.Level='JR'
+AND faculty.Fname='I. Teach';
+
+Question 6:
+-Find the names of all classes that either meet in room R128 or meet MWF.
+SELECT Cname FROM class
+WHERE meets_at LIKE '%MWF%'
+OR Room='R128';
+
+Question 7:
+-Find all the names of all classes taught by Elizabeth Taylor.
+SELECT faculty.Fname, class.Cname
+FROM faculty
+INNER JOIN class ON class.Fid=faculty.Fid
+WHERE faculty.Fname='Elizabeth Taylor';
+
+Question 8:
+-Find the names, rooms and schedule of all enrolled classes form Joseph Thompson.
+SELECT class.Cname,class.Room,class.meets_at
+FROM class
+INNER JOIN enroll ON class.Cname=enroll.Cname
+INNER JOIN Student ON Student.Snum=enroll.Snum
+WHERE Sname='Joseph Thompson';
+
+Question 9:
+-Find the names of all faculty members who teach at R128.
+SELECT faculty.Fname,class.Cname,class.Room
+FROM faculty
+INNER JOIN class ON class.Fid =faculty.Fid
+WHERE class.Room='R128';
+
+Question 10:
+-Find all the pairs of classes that meet at the same time (produce pairs in alphabetic order).
+SELECT * FROM class a INNER JOIN class b ON a.meets_At=b.meets_At AND (a.Cname <> b.Cname) ORDER BY a.meets_at;
