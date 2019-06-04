@@ -1,4 +1,4 @@
-Unique = *
+Key = *
 Database schema:
 Suppliers(sid*: integer, sname: string, address: string)
 Parts(pid*: integer, pname: string, color: string)
@@ -18,7 +18,7 @@ SELECT sid FROM catalog WHERE cost > 100;
 
 ----------------------------------------------------------------------------------------------
 
-Unique = *
+Key = *
 Database schema:
 Emp(eId*: integer, eName: string, age: integer, salary: real)
 Works(eId*: integer, dId*: integer, pctTime: integer)
@@ -35,7 +35,7 @@ WHERE w.pctTime=100 AND
 
 ----------------------------------------------------------------------------------------------
 
-Unique = *
+Key = *
 Database schema:
 Student(Snum*: integer, Sname: string, Level: string)
 Class(Fid*: integer, meets_At: string, Cname: string, Room: string)
